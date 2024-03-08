@@ -56,7 +56,7 @@ import javax.swing.*;
                             case "3":
                                 try {
 
-                                    double valorRetiro = Double.parseDouble(JOptionPane.ShowInputDialog(null, "Ingresa el valor a retirar:"));
+                                    double valorRetiro = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el valor a retirar:"));
                                     if (valorRetiro <= saldo) {
                                         saldo -= valorRetiro;
                                         JOptionPane.showMessageDialog(null, "Retiro exitoso,Tu saldo actual es: $" + saldo);
