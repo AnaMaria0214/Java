@@ -14,6 +14,30 @@ public class CoderController {
         this.objCoderModel = new CoderModel();
     }
 
+    public void delete() {
+        String listCoderString = "CODER LIST \n";
+
+        for (Object obj : this.objCoderModel.findAll()) {
+            Coder objCoder = (Coder) obj;
+            listCoderString += objCoder.toString() + "\n";
+        }
+
+        int confirm =1;
+        int idDelete = Integer.parseInt(JOptionPane.showInputDialog(listCoderString + "Enter the ID of the coder to delete"));
+        Coder objCoder = (Coder) this.objCoderModel.findById(idDelete);
+
+        if (objCoder == null) {
+            JOptionPane.showMessageDialog(null, "Coder not found");
+        } else {
+            confirm = JOptionPane.showConfirmDialog(null,"Are your sure want to delete the coder> \n" + objCoder.toString());
+
+            // si el usuario escogio que si eliminamos
+            if (confirm == 0);
+            this.objCoderModel.delete(objCoder);
+
+        }
+    }
+
     //Metodo para listar os coders
     public void getAll() {
 
