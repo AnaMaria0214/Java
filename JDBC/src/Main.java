@@ -35,6 +35,9 @@ public class Main {
                     objCoderController.Create();
                     break;
 
+                case"3":
+                    objCoderController.update();
+
                 case"4":
                     objCoderController.delete();
             }

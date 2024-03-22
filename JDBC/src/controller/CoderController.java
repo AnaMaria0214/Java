@@ -4,6 +4,7 @@ import entity.Coder;
 import model.CoderModel;
 
 import javax.swing.*;
+import java.util.List;
 
 public class CoderController {
 
@@ -15,12 +16,7 @@ public class CoderController {
     }
 
     public void delete() {
-        String listCoderString = "CODER LIST \n";
-
-        for (Object obj : this.objCoderModel.findAll()) {
-            Coder objCoder = (Coder) obj;
-            listCoderString += objCoder.toString() + "\n";
-        }
+        String listCoderString = this.getAll(this.objCoderModel.findAll());
 
         int confirm =1;
         int idDelete = Integer.parseInt(JOptionPane.showInputDialog(listCoderString + "Enter the ID of the coder to delete"));
@@ -41,16 +37,24 @@ public class CoderController {
     //Metodo para listar os coders
     public void getAll() {
 
-        String list = "list coders";
+        String list = this.getAll(this.objCoderModel.findAll());
+
+        //Mostramos toda la lista
+        JOptionPane.showMessageDialog(null,list);
+    }
+
+    public String getAll(List <Object> listObject){
+        String list = "list coders \n";
+
         //Iteramos sobre la lista que devuelve el metodo find All
-        for (Object obj : this.objCoderModel.findAll()) {
-            //Convertimos o casteamos
+        for (Object obj : listObject) {
+
+            //Convertimos o casteamos el objeto tipo object a un coder
             Coder objCoder = (Coder) obj;
 
             list += objCoder.toString() + "\n";
         }
-
-        JOptionPane.showMessageDialog(null,list);
+        return  list;
     }
 
     public void Create(){
@@ -67,6 +71,32 @@ public class CoderController {
 
         JOptionPane.showMessageDialog(null, objCoder.toString());
     }
+
+    public void update(){
+        //Listamos
+        String listCoderString = this.getAll(this.objCoderModel.findAll());
+
+        //Pedimos el Id
+        int iUpdate = Integer.parseInt(JOptionPane.showInputDialog(listCoderString +"\n Enter the ID of the coder to edit" ));
+
+        //Verificamos el Id
+        Coder objCoder = (Coder) this.objCoderModel.findById(iUpdate);
+
+        if (objCoder == null){
+            JOptionPane.showMessageDialog(null,"Coder not found");
+        }else{
+            String name = JOptionPane.showInputDialog(null,"Enter new name", objCoder.getName());
+            int age = Integer.parseInt(JOptionPane.showInputDialog(null,"Enter new age", String.valueOf(objCoder.getAge())));
+            String clan  = JOptionPane.showInputDialog(null,"Enter new clan", objCoder.getClan());
+
+            objCoder.setName(name);
+            objCoder.setAge(age);
+            objCoder.setClan(clan);
+
+             this.objCoderModel.update(objCoder);
+        }
+    }
+
 
 
 }
